@@ -20,12 +20,12 @@ resource "aws_subnet" "main" {
 
 locals {
   public_subnet = {
-    #key={} if public is true in subnety_config
+    #key={} if public is true in subnet_config
     for key, config in var.subnet_config: key=> config if config.public
   }
 
   private_subnet = {
-    #key={} if public is true in subnety_config
+    #key={} if public is true in subnet_config
     for key, config in var.subnet_config: key=> config if !config.public
   }
 }
@@ -51,4 +51,5 @@ resource "aws_route_table_association" "main" {
     
     subnet_id = aws_subnet.main[each.key].id
     route_table_id = aws_route_table.main[0].id
+
 }
